@@ -1,0 +1,12 @@
+/mydemo/node_modules
+/webpack-basic-starter/node_modules
+/webpack-bootstrap/node_modules
+/webpack-demos/node_modules
+/webpack-doc/node_modules
+/webpack-example/node_modules
+/webpack-fools/node_modules
+/webpack-howto/node_modules
+/webpack-master/node_modules
+/webpack-project/node_modules
+
+/webpack-basic-starter/bower_components

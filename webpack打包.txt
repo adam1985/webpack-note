@@ -1,0 +1,139 @@
+http://www.w2bc.com/Article/50764
+http://www.w2bc.com/article/101955
+https://segmentfault.com/a/1190000003506497
+http://www.reqianduan.com/2083.html
+https://segmentfault.com/q/1010000004273417?_ea=552328
+https://segmentfault.com/a/1190000003499526
+https://github.com/vikingmute/webpack-for-fools
+http://www.tuicool.com/articles/Ff2a6nI
+http://www.tuicool.com/articles/bA3eym7
+http://www.jianshu.com/p/271f93b8c051
+
+
+webpack 执行一次开发时的编译
+webpack -p 执行一次生成环境的编译（压缩）
+webpack --watch 在开发时持续监控增量编译（很快）
+webpack -d 让他生成SourceMaps
+webpack --progress 显示编译进度
+webpack --colors 显示静态资源的颜色
+webpack --sort-modules-by, --sort-chunks-by, --sort-assets-by 将modules/chunks/assets进行列表排序
+webpack --display-chunks 展示编译后的分块
+webpack --display-reasons 显示更多引用模块原因
+webapck --display-error-details 显示更多报错信息
+
+var webpack = require('webpack')
+
+module.exports = {
+	entry: {
+		app: './app.jsx',
+		app2: './app2.jsx'
+	},
+	output: {
+		path: './',
+		filename: '[name].js',
+	},
+	plugins: [
+		new webpack.optimize.CommonsChunkPlugin("common.js")
+	],
+	module: {
+		loaders: [
+			{
+				test: /\.jsx$/,
+				loader: 'jsx-loader',
+			}
+		]
+	}
+}
+
+var webpack = require('webpack');
+var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
+module.exports = {
+	plugins: [commonsPlugin],
+	entry: {	
+		index : './src/js/page/index.js'
+	},
+	output: {	
+		path: 'dist/js/page',	
+		filename: '[name].js'
+	},
+	module: {
+		loaders: [	
+			{ test: /.css$/, loader: 'style-loader!css-loader' },	
+			{ test: /.js$/, loader: 'jsx-loader?harmony' },	
+			{ test: /.scss$/, loader: 'style!css!sass?sourceMap'},	
+			{ test: /.(png|jpg)$/, loader: 'url-loader?limit=8192'}	
+		]
+	},
+	resolve: {	
+		root: 'E:/github/flux-example/src', 
+		extensions: ['', '.js', '.json', '.scss'],	
+		alias: {	
+			AppStore : 'js/stores/AppStores.js',
+			ActionType : 'js/actions/ActionType.js',
+			AppAction : 'js/actions/AppAction.js'	
+		}
+	}
+};
+
+
+require('../../css/reset.scss'); //加载初始化样式
+require('../../css/allComponent.scss'); //加载组件样式
+var React = require('react');
+var AppWrap = require('../component/AppWrap'); //加载组件
+var createRedux = require('redux').createRedux;
+var Provider = require('redux/react').Provider;
+var stores = require('AppStore');
+var redux = createRedux(stores);
+var App = React.createClass({	
+	render: function() {		
+		return (			
+			<Provider redux={redux}>				
+				{function() { return <AppWrap />; }
+				}			
+			</Provider>		
+		);	
+	}});
+React.render(<App />, document.body);
+
+
+var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+module.exports = {	
+	entry: {		
+		p1: "./page1",		
+		p2: "./page2",		
+		p3: "./page3",		
+		ap1: "./admin/page1",
+		ap2: "./admin/page2"	
+	},
+	output: {		
+		filename: "[name].js"	
+	},	
+	plugins: [		
+		new CommonsChunkPlugin("admin-commons.js", ["ap1", "ap2"]),		
+		new CommonsChunkPlugin("commons.js", ["p1", "p2", "admin-commons.js"])	
+	]
+};
+
+// page1.html: commons.js, p1.js
+// page2.html: commons.js, p2.js
+// page3.html: p3.js
+// admin-page1.html: commons.js, admin-commons.js, ap1.js
+// admin-page2.html: commons.js, admin-commons.js, ap2.js
+// 
+
+var webpack = require('webpack');
+var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+module.exports = {
+	plugins: [commonsPlugin, new ExtractTextPlugin("[name].css")],
+	entry: {//...省略其它配置
+
+
+
+gulp.task("webpack", function(callback) {	// run webpack	
+	webpack({}, function(err, stats) {		
+		if(err) throw new gutil.PluginError("webpack", err);		
+		gutil.log("[webpack]", stats.toString({}));		
+		callback();	
+	});
+});
