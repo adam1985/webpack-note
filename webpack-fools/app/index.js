@@ -4,6 +4,8 @@ import $ from 'jquery';
 import moment from 'moment';
 import 'imports?jQuery=jquery!./plugin.js';
 
+console.log(require('angular'));
+
 let app = document.createElement('div');
 const myPromise = Promise.resolve(42);
 myPromise.then((number) => {

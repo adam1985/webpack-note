@@ -13,7 +13,7 @@ module.exports = {
     //三个入口文件，app, mobile和 vendors
     app: path.resolve(APP_PATH, 'index.js'),
     mobile: path.resolve(APP_PATH, 'mobile.js'),
-    vendors: ['jquery', 'moment']
+    vendors: ['jquery', 'moment', 'angular']
   },
   //输出的文件名 合并以后的js会命名为bundle.js
   output: {
@@ -40,6 +40,14 @@ module.exports = {
         presets: ['es2015']
       }
     }]
+  },
+  resolve: {
+    root: [
+      path.resolve(APP_PATH)
+    ],
+    alias: {
+
+    }
   },
   //添加我们的插件 会自动生成一个html文件
   plugins: [
@@ -69,6 +77,7 @@ module.exports = {
       //$: "jquery",
       //jQuery: "jquery",
       //"window.jQuery": "jquery"
+      //angular: "angular"
     })
   ]
 };
